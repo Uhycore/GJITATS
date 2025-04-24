@@ -1,3 +1,10 @@
 <?php
 echo "Hello, World! This is a test file.";
-echo "This is a test file for the GitHub Copilot demo.";
+
+include 'model/role.php';
+
+$test = new ModelRole();
+$roles = $test->getAllRoles();
+echo "<pre>";
+print_r($roles);
+echo "</pre>";
