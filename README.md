@@ -1,8 +1,13 @@
-daftar fitur projek:
+# GERAK JALAN ITATS
 
-- Perorangan
-  1. Create perorangan ✔️
-  2. Read perorangan ✔️
-  3. Update perorangan ✖️
-  4. Delete perorangan ✔️
-  5. Search perorangan ✖️
+Deskripsi singkat tentang proyek Anda, misalnya: Sistem informasi untuk mengelola data perorangan.
+
+## Daftar Fitur Proyek
+
+- **Perorangan**
+  1. **Create Perorangan** ✔️
+  2. **Read Perorangan** ✔️
+  3. **Update Perorangan** ✖️
+  4. **Delete Perorangan** ✔️
+  5. **Search Perorangan** ✖️
+
