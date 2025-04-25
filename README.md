@@ -1,7 +1,5 @@
 # GERAK JALAN ITATS
 
-Deskripsi singkat tentang proyek Anda, misalnya: Sistem informasi untuk mengelola data perorangan.
-
 ## Daftar Fitur Proyek
 
 - **Perorangan**
@@ -10,5 +8,3 @@ Deskripsi singkat tentang proyek Anda, misalnya: Sistem informasi untuk mengelol
   3. **Update Perorangan** ✖️
   4. **Delete Perorangan** ✔️
   5. **Search Perorangan** ✖️
-
-
