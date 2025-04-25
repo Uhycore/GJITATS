@@ -1,63 +1,108 @@
 <?php
-include 'connect/connection.php';
-include 'model/user.php';
+require_once 'connect/connection.php';
+require_once 'user.php';
 
-class ModelProrangan
+require_once 'uniqcode.php';
+
+class ModelPerorangan
 {
     private $db;
+    private $uniqcode;
+
+    private $userModel;
 
     public function __construct()
     {
         $this->db = new Database();
+        $this->uniqcode = new Uniqcode();
+
+        $this->userModel = new ModelUser();
     }
 
-    public function addProrangan($name, $description, $userId)
+    public function addPerorangan($nama_lengkap, $no_hp, $alamat)
     {
         $conn = $this->db->connect();
-        $sql = "INSERT INTO prorangan (name, description, user_id) VALUES (?, ?, ?)";
+
+        // Start a transaction
+        $conn->begin_transaction();
+
+        // Generate unique user_id
+        $user_id = $this->uniqcode->generateUniqueId();
+
+        // Assign role_id for user (assumed to be 2 for perorangan)
+        $role_id = 2;
+
+        // Add user first
+        if (!$this->userModel->addUser($user_id, $role_id)) {
+            $conn->rollback(); // Rollback if user insert fails
+            return false;
+        }
+
+        // Generate nomor dada
+        $nomor_dada = $this->uniqcode->getNextNomorDada();
+
+        // Insert into perorangan table
+        $sql = "INSERT INTO perorangan (user_id, nama_lengkap, no_hp, alamat, nomor_dada) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $name, $description, $userId);
-        return $stmt->execute();
+        $stmt->bind_param("isssi", $user_id, $nama_lengkap, $no_hp, $alamat, $nomor_dada);
+
+  
+        if (!$stmt->execute()) {
+            $conn->rollback(); 
+            return false;
+        }
+        $conn->commit();
+        return true;
     }
-    public function updateProrangan($id, $name, $description, $userId)
+
+
+    public function updatePerorangan($id, $name, $description, $userId)
     {
         $conn = $this->db->connect();
-        $sql = "UPDATE prorangan SET name = ?, description = ?, user_id = ? WHERE id = ?";
+        $sql = "UPDATE perorangan SET name = ?, description = ?, user_id = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssii", $name, $description, $userId, $id);
         return $stmt->execute();
     }
 
-    public function deleteProrangan($id)
+    public function deletePeroranganByUserId($id)
     {
         $conn = $this->db->connect();
-        $sql = "DELETE FROM prorangan WHERE id = ?";
+
+        // Hapus data perorangan terlebih dahulu
+        $sql = "DELETE FROM perorangan WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        $stmt->execute();
+
+        // Kemudian baru hapus data user
+        $this->userModel->deleteUser($id);
+
+        return true;
     }
 
 
-    public function getAllProrangan()
+
+    public function getAllPerorangan()
     {
         $conn = $this->db->connect();
-        $sql = "SELECT * FROM prorangan";
+        $sql = "SELECT * FROM perorangan";
         $result = $conn->query($sql);
-        $prorangan = array();
+        $perorangan = array();
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
-                $prorangan[] = $row;
+                $perorangan[] = $row;
             }
         }
 
-        return $prorangan;
+        return $perorangan;
     }
 
-    public function getProranganById($id)
+    public function getPeroranganByUserId($id)
     {
         $conn = $this->db->connect();
-        $sql = "SELECT * FROM prorangan WHERE id = ?";
+        $sql = "SELECT * FROM perorangan WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();

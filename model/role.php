@@ -1,6 +1,6 @@
 <?php
 
-include 'connect/connection.php';
+require_once 'connect/connection.php';
 
 class ModelRole
 {

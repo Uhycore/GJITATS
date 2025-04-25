@@ -1,6 +1,6 @@
 <?php
-include 'connect/connection.php';
-include 'model/role.php';
+require_once 'connect/connection.php';
+require_once 'model/role.php';
 
 class ModelUser
 {
@@ -10,12 +10,12 @@ class ModelUser
     {
         $this->db = new Database();
     }
-    public function addUser($name, $email, $password, $roleId)
+    public function addUser($id, $role_id)
     {
         $conn = $this->db->connect();
-        $sql = "INSERT INTO user (name, email, password, role_id) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO user (id,role_id) VALUES (?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $name, $email, password_hash($password, PASSWORD_BCRYPT), $roleId);
+        $stmt->bind_param("ii", $id, $role_id);
         return $stmt->execute();
     }
     public function updateUser($id, $name, $email, $password, $roleId)
