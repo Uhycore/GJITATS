@@ -8,3 +8,7 @@ $test = new ModelProrangan();
 echo "<pre>";
 print_r($test->getAllProrangan());
 echo "</pre>";
+
+echo "<pre>";
+print_r($test->getProranganById(101));
+echo "</pre>";
