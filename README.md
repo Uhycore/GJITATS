@@ -8,3 +8,7 @@
   3. **Update Perorangan** ✖️
   4. **Delete Perorangan** ✔️
   5. **Search Perorangan** ✖️
+
+
+## Aturan project
+1. **Login menggunakan unique code bukan username/password**
