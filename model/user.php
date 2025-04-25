@@ -18,12 +18,12 @@ class ModelUser
         $stmt->bind_param("ii", $id, $role_id);
         return $stmt->execute();
     }
-    public function updateUser($id, $name, $email, $password, $roleId)
+    public function updateUser($id, $role_id)
     {
         $conn = $this->db->connect();
-        $sql = "UPDATE user SET name = ?, email = ?, password = ?, role_id = ? WHERE id = ?";
+        $sql = "UPDATE user SET role_id = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssii", $name, $email, password_hash($password, PASSWORD_BCRYPT), $roleId, $id);
+        $stmt->bind_param("ii", $id, $role_id);
         return $stmt->execute();
     }
 
