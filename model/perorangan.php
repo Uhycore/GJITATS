@@ -28,6 +28,15 @@ class ModelProrangan
         return $stmt->execute();
     }
 
+    public function deleteProrangan($id)
+    {
+        $conn = $this->db->connect();
+        $sql = "DELETE FROM prorangan WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        return $stmt->execute();
+    }
+
 
     public function getAllProrangan()
     {
