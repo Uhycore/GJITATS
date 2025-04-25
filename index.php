@@ -1,10 +1,10 @@
 <?php
 echo "Hello, World! This is a test file.";
 
-include 'model/role.php';
+include 'model/perorangan.php';
 
-$test = new ModelRole();
-$roles = $test->getAllRoles();
+$test = new ModelProrangan();
+
 echo "<pre>";
-print_r($roles);
+print_r($test->getAllProrangan());
 echo "</pre>";
