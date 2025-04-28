@@ -8,6 +8,6 @@ $test = new ModelPerorangan();
 echo "<pre>";
 print_r($test->getAllPerorangan());
 echo "</pre>";
-echo 'hi';
+echo 'ubH DU SUBNU';
 
 echo " coba";
