@@ -8,3 +8,6 @@ $test = new ModelPerorangan();
 echo "<pre>";
 print_r($test->getAllPerorangan());
 echo "</pre>";
+
+
+echo " coba";
